@@ -1,13 +1,22 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import { StyleSheet, Text, View, Navigator, Dimensions } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
-export default class App extends React.Component {
+import Todos from './app/components/todos';
+
+const Screens = StackNavigator({
+    Todos: { screen: Todos }
+  });
+
+export default class App extends Component {
+  constructor () {
+    super();
+  }
+  
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+      <View style={styles.screen}>
+        <Screens />
       </View>
     );
   }
@@ -20,4 +29,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  screen: {
+    backgroundColor: '#34495e',
+    height: Dimensions.get('window').height
+  }
 });

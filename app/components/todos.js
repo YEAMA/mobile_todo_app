@@ -14,14 +14,19 @@ export default class Todos extends Component {
 
     this.renderRow = this.renderRow.bind(this);
     this.pressRow = this.pressRow.bind(this);
+    this.refresherFunc = this.refresherFunc.bind(this);
   }
 
   static navigationOptions = ({ navigation }) => {
     const {navigate} = navigation;
+    const {params} = navigation.state;
+    console.log("MY PARAMS: ", params);
     return {
       title: 'My Todos',
       headerRight: (
-        <Button title="+ New Todo" onPress={() => navigate('Create_Todo')}
+        <Button title="+ New Todo" onPress={() => navigate('Create_Todo', {
+          refresherFunc: params.refresherFunc
+        })}
         />
       ),
     };
@@ -30,6 +35,7 @@ export default class Todos extends Component {
   getTodos() {
     AsyncStorage.getItem('myTodos')
       .then((response) => {
+        console.log(JSON.parse(response));
         this.setState({
           todoDataSource: this.state.todoDataSource.cloneWithRows(JSON.parse(response)),
           todos: JSON.parse(response)
@@ -37,10 +43,18 @@ export default class Todos extends Component {
       });
   }
 
-  addNewTodo() {
-    const { navigate } = this.props.navigation;
-    navigate('Create_Todo');
+  componentWillMount() {
+    this.props.navigation.setParams({
+        refresherFunc: this.refresherFunc.bind(this)
+    });
   }
+
+  // addNewTodo() {
+  //   const { navigate } = this.props.navigation;
+  //   navigate('Create_Todo', {
+  //     refresherFunc: this.refresherFunc.bind(this)
+  //   });
+  // }
 
   pressRow(todo) {
     const { navigate } = this.props.navigation;

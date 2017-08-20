@@ -24,6 +24,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    // AsyncStorage.removeItem("myTodos");
     // const data = JSON.stringify([
     //   {title: "test", description: "text description", completed: false},
     //   {title: "test 2", completed: true},
@@ -31,7 +32,6 @@ export default class App extends Component {
     // ]);
 
     // AsyncStorage.setItem("myTodos", data);
-
   }
   
   render() {
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
 
   screen: {
-    backgroundColor: '#34495e',  //'#34495e'
+    backgroundColor: '#34495e',
     height: Dimensions.get('window').height
   }
 });

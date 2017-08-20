@@ -13,6 +13,7 @@ export default class Single_Todo extends Component {
   }
 
   findTodo(allTodos, title) {
+    console.log("INSIDE FUNCTION: ", allTodos);
     for(let i = 0; i <= allTodos.length; i++) {
       if (allTodos[i].title == title) {
         return {todo: allTodos[i], index: i};

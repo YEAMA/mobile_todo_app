@@ -4,7 +4,8 @@ import { StackNavigator } from 'react-navigation';
 
 import Todos from './app/components/todos';
 import Single_Todo from './app/components/single_todo';
-import Create_Todo from './app/components/create_todo'; 
+import Create_Todo from './app/components/create_todo';
+import Edit_Todo from './app/components/edit_todo'; 
 
 const Screens = StackNavigator({
     Todos: { screen: Todos },
@@ -15,6 +16,9 @@ const Screens = StackNavigator({
       })},
     Create_Todo: {
       screen: Create_Todo
+    },
+    Edit_Todo:{
+      screen: Edit_Todo
     }
   });
 

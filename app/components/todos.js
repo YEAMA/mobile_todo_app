@@ -87,7 +87,7 @@ export default class Todos extends Component {
           </View>
           <View style={styles.middle}>
              <Text style={{fontSize: 15, color: '#3498db'}}>{todo.title}</Text> 
-             <Text style={{fontSize: 12, color: '#7f8c8d'}}>{todo.description ? todo.description : "N/A"}</Text>
+             <Text style={{fontSize: 12, color: '#7f8c8d', maxHeight: 100}}>{todo.description ? todo.description : "N/A"}</Text>
           </View>
           
           <View style={styles.last}>

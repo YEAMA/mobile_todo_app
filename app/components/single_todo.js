@@ -13,7 +13,6 @@ export default class Single_Todo extends Component {
   }
 
   findTodo(allTodos, title) {
-    console.log("INSIDE FUNCTION: ", allTodos);
     for(let i = 0; i <= allTodos.length; i++) {
       if (allTodos[i].title == title) {
         return {todo: allTodos[i], index: i};
@@ -64,15 +63,41 @@ export default class Single_Todo extends Component {
 
   }
 
-  editTodo(title, description) {
+  editTodo(title, description, completed) {
     const { navigate } = this.props.navigation;
     navigate('Edit_Todo', {
-      title, description
+      title, description, completed,
+        childRefresherFunc: this.refresherFunc.bind(this),
+        parentRefresherFunc: this.props.navigation.state.params.refresherFunc
     });
   }
 
   delTodo(title) {
-    // AsyncStorage.removeItem(title);
+    AsyncStorage.getItem('myTodos')
+      .then((todos) => {
+        todos = JSON.parse(todos);
+        var todoData = this.findTodo(todos, title);
+        todos.splice(todoData.index, 1);
+
+        var newTodos = todos;
+        newTodos = JSON.stringify(newTodos);
+
+        AsyncStorage.setItem("myTodos", newTodos);
+
+        this.setState({
+          loading: false
+        })
+
+        this.props.navigation.state.params.refresherFunc(newTodos);
+
+        this.props.navigation.goBack();
+      })
+  }
+
+  refresherFunc(input) {
+    this.setState({
+      todo: JSON.parse(input)
+    });
   }
 
   componentWillMount () {
@@ -105,7 +130,7 @@ export default class Single_Todo extends Component {
           
 
           <View>
-            <Button title="Edit" color="silver" onPress={() => this.editTodo(this.state.todo.title, this.state.todo.description)}/>
+            <Button title="Edit" color="silver" onPress={() => this.editTodo(this.state.todo.title, this.state.todo.description, this.state.todo.completed)}/>
             <Button title="Delete" color="red" onPress={() => this.delTodo(this.state.todo.title)}/>
           </View>
         </View>
